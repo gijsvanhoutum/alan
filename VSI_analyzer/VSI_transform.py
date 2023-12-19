@@ -5,17 +5,17 @@ import csv
 from scipy import ndimage
 import math
 
-import VSI_functions as F
+from .VSI_functions import *
 
 import scipy.ndimage.measurements as sp
 
-from skimage.morphology import watershed
+from skimage.segmentation import watershed
 from skimage.feature import peak_local_max
 from scipy import ndimage
 import scipy
 
 from sklearn.cluster import DBSCAN
-from sklearn.datasets.samples_generator import make_blobs
+from sklearn.datasets import make_blobs
 
 from scipy.optimize import minimize_scalar,curve_fit
 
@@ -64,7 +64,7 @@ class Transformation:
                     if type(l_box) is list:
                         for l_entry in l_box[1]:
                             if type(l_entry) is list:
-                                if l_entry[1] is not "L":
+                                if l_entry[1] != "L":
                                     s_name = l_entry[0]
                                     value = l_entry[6]
             

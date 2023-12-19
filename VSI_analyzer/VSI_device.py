@@ -5,7 +5,7 @@ import cv2               # OpenCV library
 from PyQt5.QtCore import *  # PyQt core objects 
 
 # Users defined classes / modules
-from VSI_metaclass import MetaClass # Metaclass for interfacing
+from .VSI_metaclass import MetaClass # Metaclass for interfacing
 
 import time
 import csv

@@ -7,21 +7,20 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 
 # Home made modules
-from VSI_gui import Gui
-from VSI_viewhandler import ViewHandler
-from VSI_view import View
-from VSI_settinghandler import SettingHandler
-from VSI_setting import CombiSetting
+from .VSI_gui import Gui
+from .VSI_viewhandler import ViewHandler
+from .VSI_view import View
+from .VSI_settinghandler import SettingHandler
+from .VSI_setting import CombiSetting
 #from VSI_recordhandler import RecordHandler
 #from VSI_record import Record
-from VSI_devicehandler import DeviceHandler
+from .VSI_devicehandler import DeviceHandler
 
-from VSI_transformhandler import TransformHandler
-from VSI_data import Frame
+from .VSI_transformhandler import TransformHandler
+from .VSI_data import Frame
 
-from VSI_device import *
-from VSI_transform import *  
-
+from .VSI_device import *
+from .VSI_transform import *  
 
 
 class Model(QObject):    

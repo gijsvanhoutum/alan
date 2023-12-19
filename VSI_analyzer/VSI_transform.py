@@ -5,7 +5,7 @@ import csv
 from scipy import ndimage
 import math
 
-from .VSI_functions import triangle,findDeposition
+from .VSI_functions import *
 
 import scipy.ndimage.measurements as sp
 
@@ -363,10 +363,10 @@ class Normal(Transformation):
             s.append(sides)
             
             
-        rng_err, h_err = F.histograms(s)
-        rng_nrm, h_nrm = F.histograms(s_n)
+        rng_err, h_err = histograms(s)
+        rng_nrm, h_nrm = histograms(s_n)
         
-        te = F.euclidean(nsses)
+        te = euclidean(nsses)
 
      
         rng = np.arange(img.shape[1])
@@ -512,11 +512,11 @@ class Threshold(Transformation):
         lr = np.hstack((l,r))
 
         m_gray = np.mean(lr,axis=1)      
-        li,ri,d_gray,s_gray = F.triangle(m_gray,left=0,right=len(m_gray)-1)       
+        li,ri,d_gray,s_gray = triangle(m_gray,left=0,right=len(m_gray)-1)       
 
         t_otsu, lr_otsu = cv2.threshold(lr,0,255,cv2.THRESH_TOZERO+cv2.THRESH_OTSU)
 
-        t_rng,t = F.threshold(lr,0,255,below=0)           
+        t_rng,t = threshold(lr,0,255,below=0)           
         t_triangle = t_rng[np.argmin(t)]
 
         otsu[:,:d1n] = lr_otsu[:,:d1n]
@@ -536,8 +536,8 @@ class Threshold(Transformation):
         total = np.hstack((tl,tr))
         m_otsu = np.mean(total,axis=1)
            
-        li,ri,d_triangle,s_triangle = F.triangle(m_triangle,left=0,right=len(m_gray)-1) 
-        lio,rio,d_otsu,s_otsu = F.triangle(m_otsu,left=0,right=len(m_gray)-1) 
+        li,ri,d_triangle,s_triangle = triangle(m_triangle,left=0,right=len(m_gray)-1) 
+        lio,rio,d_otsu,s_otsu = triangle(m_otsu,left=0,right=len(m_gray)-1) 
                
         mi = np.argmax(m_triangle)
         
@@ -595,7 +595,7 @@ class SegmentDeposition(Transformation):
     
         #ex_list = F.clustering(img,left=d1,right=d2)
 
-        dn1,dn2,t,s = F.findDeposition(img,left=d1,right=d2)
+        dn1,dn2,t,s = findDeposition(img,left=d1,right=d2)
  
         view_data = {"$I$":img,
                      "$\delta_1$":dn1,
@@ -640,7 +640,7 @@ class SegmentLineEdge(Transformation):
         dn2 = pass_data[2] 
   
         g = cv2.cvtColor(img ,cv2.COLOR_RGB2GRAY)  
-        d3,d5,d4,row,topt,rng,t = F.findLineEdge(g,dn1,dn2,self.lt,self.rt,side="out")   
+        d3,d5,d4,row,topt,rng,t = findLineEdge(g,dn1,dn2,self.lt,self.rt,side="out")   
 
         self.lt = max((topt-self.delta,0))
         self.rt = min((topt+self.delta,255))  
@@ -695,7 +695,7 @@ class ExtractWidth(Transformation):
         
         edge = img[d3:d4,:,:]
     
-        d6,d7,t,s = F.findDeposition(edge,left=dn1,right=dn2)
+        d6,d7,t,s = findDeposition(edge,left=dn1,right=dn2)
 
         view_data = {"$I^{rgb}$":img,
                      "$\delta^{NEW}_1$":dn1,
@@ -742,7 +742,7 @@ class ExtractHeight(Transformation):
         d7 = pass_data[8]
 
         g = cv2.cvtColor(img ,cv2.COLOR_RGB2GRAY)  
-        d8,d10,d9,row,topt,rng,t = F.findLineEdge(g,d6,d7,self.lt,self.rt,
+        d8,d10,d9,row,topt,rng,t = findLineEdge(g,d6,d7,self.lt,self.rt,
                                             side="in",below=d5)   
         
         self.lt = max((topt-self.delta,0))
@@ -870,19 +870,19 @@ class Complete(Transformation):
         left_ini = self.delta
         right_ini = I.shape[1] - self.delta
         
-        one = F.findDeposition(I,left=left_ini,right=right_ini)
+        one = findDeposition(I,left=left_ini,right=right_ini)
         
-        if F.verify(one[2],one[0],one[1],left_ini,right_ini):
+        if verify(one[2],one[0],one[1],left_ini,right_ini):
             
-            two = F.findLineEdge(G,one[0],one[1],
+            two = findLineEdge(G,one[0],one[1],
                                  self.bed_min_t,self.bed_max_t)  
             
             I_bed = I[two[0]:two[2],:,:]
     
-            three = F.findDeposition(I_bed,left=one[0],right=one[1])  
+            three = findDeposition(I_bed,left=one[0],right=one[1])  
             
-            if F.verify(three[2],three[0],three[1],one[0],one[1]):
-                four = F.findLineEdge(G,three[0],three[1],
+            if verify(three[2],three[0],three[1],one[0],one[1]):
+                four = findLineEdge(G,three[0],three[1],
                                       self.dep_min_t,self.dep_max_t,
                                       side="in",below=0)
                 
@@ -983,18 +983,18 @@ class CompleteXiris3(Transformation):
             side = G[:,left:right]
             
         sm = np.sum(side,axis=1)    
-        li,ri,d,s = F.triangle(sm, 0, len(sm)-1)
+        li,ri,d,s = triangle(sm, 0, len(sm)-1)
                                
         mi = np.argmax(sm)
-        mid = F.midval(sm,li,mi)
+        mid = midval(sm,li,mi)
         
         return (li,mid,mi,sm)
 
     def findDeposition(self, ch, left, right ):     
     
-        sse = F.template(ch,left=left,right=right)
-        total = F.normalize(sse,left=left,right=right)    
-        li,ri,d,s = F.triangle(total,left=left,right=right)
+        sse = template(ch,left=left,right=right)
+        total = normalize(sse,left=left,right=right)    
+        li,ri,d,s = triangle(total,left=left,right=right)
         
         return (li,ri,total)
         
@@ -1065,18 +1065,18 @@ class CompleteXiris2(Transformation):
             side = G[:,left:right]
             
         sm = np.sum(side,axis=1)    
-        li,ri,d,s = F.triangle(sm, 0, len(sm)-1)
+        li,ri,d,s = triangle(sm, 0, len(sm)-1)
                                
         mi = np.argmax(sm)
-        mid = F.midval(sm,li,mi)
+        mid = midval(sm,li,mi)
         
         return (li,mid,mi,sm)
 
     def findDeposition(self, ch, left, right ):     
     
-        sse = F.template(ch,left=left,right=right)
-        total = F.normalize(sse,left=left,right=right)    
-        li,ri,d,s = F.triangle(total,left=left,right=right)
+        sse = template(ch,left=left,right=right)
+        total = normalize(sse,left=left,right=right)    
+        li,ri,d,s = triangle(total,left=left,right=right)
         
         return (li,ri,total)
         
@@ -1356,7 +1356,7 @@ class MeltpoolThreshold(Transformation):
 
         l,r,d,s = triangle(rowcol,0,len(rowcol)-1)
         out = np.copy(rowcol)
-        if F.verify(rowcol,l,r,0,len(rowcol)-1):
+        if verify(rowcol,l,r,0,len(rowcol)-1):
             out[:l] = 0
             out[r:] = 0
         else:
@@ -2077,7 +2077,7 @@ class W_Keyence(Transformation):
         col = img[i,:].flatten()
         li,ri,d,s = triangle(col,left=left,right=right)
         
-        if F.verify(col,li,ri,left,right):
+        if verify(col,li,ri,left,right):
             return (li,ri)
         else:
             return (0,0)    
@@ -2184,7 +2184,7 @@ class Calibration_Keyence(Transformation):
         col = img[i,:].flatten()
         li,ri,d,s = triangle(col,left=left,right=right)
         
-        if F.verify(col,li,ri,left,right):
+        if verify(col,li,ri,left,right):
             return (li,ri)
         else:
             return (0,0)    

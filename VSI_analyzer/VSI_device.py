@@ -124,7 +124,7 @@ class NEW_AVI(BaseDevice):
 
     def setupTimer(self):
         timer = QTimer()
-        timer.setInterval(1000/self.fps)
+        timer.setInterval(int(1000/self.fps))
         timer.timeout.connect(self.sendFrame)     
         return timer
 
@@ -184,7 +184,7 @@ class NEW_AVI(BaseDevice):
         elif name == 'Forward':
             self.setPosition(1)           
         elif name == "S2":
-            self.timer.setInterval(1000/value)
+            self.timer.setInterval(int(1000/value))
         elif name == 'C1':
             self.loop = value
             
@@ -221,7 +221,7 @@ class InternshipAVI(BaseDevice):
 
     def setupTimer(self):
         timer = QTimer()
-        timer.setInterval(1000/self.fps)
+        timer.setInterval(int(1000/self.fps))
         timer.timeout.connect(self.sendFrame)     
         return timer
 
@@ -281,7 +281,7 @@ class InternshipAVI(BaseDevice):
         elif name == 'Forward':
             self.setPosition(1)           
         elif name == "S2":
-            self.timer.setInterval(1000/value)
+            self.timer.setInterval(int(1000/value))
         elif name == 'C1':
             self.loop = value
             
@@ -494,7 +494,7 @@ class XirisDAT(BaseDevice):
         
     def setupTimer(self):
         self.timer = QTimer()
-        self.timer.setInterval(1000/10)
+        self.timer.setInterval(int(1000/10))
         self.timer.timeout.connect(self.sendFrame)            
     
     def setPosition(self,diff): 
@@ -518,7 +518,7 @@ class XirisDAT(BaseDevice):
         elif name == 'Forward':
             self.setPosition(1)           
         elif name == "S2":
-            self.timer.setInterval(1000/value)
+            self.timer.setInterval(int(1000/value))
         elif name == 'C1':
             self.loop = value    
         elif name == "top":
@@ -678,7 +678,7 @@ class MultiCSV(BaseDevice):
         
         algo = self.dataframes[0].values
         key = self.dataframes[1].values
-        print(algo.shape,key.shape)
+
         pass_data = [self.dataframes]
         
         view_data = {"algo_height":[np.arange(algo.shape[0]),algo[:,0]],
@@ -694,13 +694,13 @@ class MultiCSV(BaseDevice):
                   
     def setupTimer(self,fps):
         self.timer = QTimer()
-        self.timer.setInterval(1000/fps)
+        self.timer.setInterval(int(1000/fps))
         self.timer.timeout.connect(self.sendFrame)            
 
     def setParams(self,par_list):
         name = par_list[0]
         value = par_list[1] 
-        print(name,value)
+
         if name == 'Start':
             self.timer.start()
         elif name == 'Pause':
@@ -713,7 +713,7 @@ class MultiCSV(BaseDevice):
         elif name == 'Forward':
             self.setPosition(1)           
         elif name == "S2":
-            self.timer.setInterval(1000/value)
+            self.timer.setInterval(int(1000/value))
         elif name == 'C1':
             self.loop = value  
 

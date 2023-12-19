@@ -28,7 +28,7 @@ def main():
     a = QApplication(sys.argv)
 
     
-    Sources = [NEW_AVI,InternshipAVI,XirisAVI,KeyenceCSV,MultiCSV,XirisDAT]
+    Sources = [XirisAVI]#NEW_AVI,InternshipAVI,KeyenceCSV,MultiCSV,XirisDAT]
     Algos = [SortBlue,Error,Normal,Triangle,Threshold,SegmentDeposition, \
               SegmentLineEdge,ExtractWidth,ExtractHeight,WidthHeight, \
               Complete,HW,W_Keyence,CompleteXiris,CompleteXiris2, \

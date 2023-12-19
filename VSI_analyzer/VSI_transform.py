@@ -5,7 +5,7 @@ import csv
 from scipy import ndimage
 import math
 
-from .VSI_functions import *
+from .VSI_functions import triangle,findDeposition
 
 import scipy.ndimage.measurements as sp
 
@@ -442,7 +442,7 @@ class Triangle(Transformation):
         dt_max = np.argmax(dt)
         dt_min = np.argmin(dt)
         
-        li,ri,d,s = F.triangle(te,left=l,right=r)
+        li,ri,d,s = triangle(te,left=l,right=r)
             
         rng = np.arange(img.shape[1])
 
@@ -499,7 +499,6 @@ class Threshold(Transformation):
 
     def transform(self,frame):
         pass_data = frame.getLastPassData()
-
         img = pass_data[0]
         d1n = pass_data[1]
         d2n = pass_data[2]
@@ -1355,7 +1354,7 @@ class MeltpoolThreshold(Transformation):
       
     def dotriangle(self,rowcol):
 
-        l,r,d,s = F.triangle(rowcol,0,len(rowcol)-1)
+        l,r,d,s = triangle(rowcol,0,len(rowcol)-1)
         out = np.copy(rowcol)
         if F.verify(rowcol,l,r,0,len(rowcol)-1):
             out[:l] = 0
@@ -1685,7 +1684,7 @@ class SortThreshold(Transformation):
     def getTemplate3(self,sm1):
         delta = 50
         stk = np.hstack((sm1,sm1[::-1]))
-        li1,ri1,d1,s1 = F.triangle(stk,0,len(stk)-1) 
+        li1,ri1,d1,s1 = triangle(stk,0,len(stk)-1) 
         template = scipy.signal.resample(stk[li1:ri1],int((ri1-li1)/2)).astype(np.uint8)
 
         return template,int(li1/2),int(ri1/2)
@@ -1695,7 +1694,7 @@ class SortThreshold(Transformation):
         even = sm1[1::2]
         tmp_side = (odd+even)/2
         tmp = np.hstack((tmp_side,tmp_side[::-1]))
-        li1,ri1,d1,s1 = F.triangle(tmp,0,len(tmp)-1) 
+        li1,ri1,d1,s1 = triangle(tmp,0,len(tmp)-1) 
         template = tmp.astype(np.uint8)
         return template,li1,ri1
         
@@ -1703,7 +1702,7 @@ class SortThreshold(Transformation):
         stk = np.hstack((sm1,sm1[::-1]))
         tmp = cv2.resize(stk,(len(sm1),1)).flatten()
 
-        li1,ri1,d1,s1 = F.triangle(tmp,0,len(tmp)-1) 
+        li1,ri1,d1,s1 = triangle(tmp,0,len(tmp)-1) 
         print(li1,ri1)
         template = tmp[li1:ri1].astype(np.uint8)
         tmp = np.reshape(template,(1,len(template)))
@@ -1844,7 +1843,7 @@ class HoughLines(Transformation):
         sm1 = np.median(S1,axis=1)
         
         #v = np.diff(sm1)
-        li1,ri1,d1,s1 = F.triangle(sm1,0,len(sm1)-1) 
+        li1,ri1,d1,s1 = triangle(sm1,0,len(sm1)-1) 
         v = sm1
         #print(v.shape,sm1.shape)
         #arg = np.argmax(v)  
@@ -1935,8 +1934,8 @@ class TiltCorrection(Transformation):
         slc = np.sum(lc, axis=1)
         src = np.sum(rc, axis=1)  
 
-        li1,ri1,d1,s1 = F.triangle(slc,0,s[0]-1) 
-        li2,ri2,d2,s2 = F.triangle(src,0,s[0]-1) 
+        li1,ri1,d1,s1 = triangle(slc,0,s[0]-1) 
+        li2,ri2,d2,s2 = triangle(src,0,s[0]-1) 
         
 
             
@@ -1993,7 +1992,7 @@ class TriangleDirect(Transformation):
         
         G = device_data[0]
         s = G.shape
-        T2 =  [ (F.triangle(G[:,i],0,s[0]-1) ) for i in range(s[1]) ]
+        T2 =  [ (triangle(G[:,i],0,s[0]-1) ) for i in range(s[1]) ]
         mid = [s[0]+(s[1]-s[0])/2 for s in T2]
         left = [s[0] for s in T2]
         right = [s[1] for s in T2]
@@ -2076,7 +2075,7 @@ class W_Keyence(Transformation):
         
     def getWidth(self,i,img,left,right):
         col = img[i,:].flatten()
-        li,ri,d,s = F.triangle(col,left=left,right=right)
+        li,ri,d,s = triangle(col,left=left,right=right)
         
         if F.verify(col,li,ri,left,right):
             return (li,ri)
@@ -2128,7 +2127,7 @@ class W_Keyence(Transformation):
         dst = dst / 10000 # micrometer
         rng = np.arange(dst.shape[1]) * 2798.716 / 1000
         mean = np.mean(dst,axis=0)
-        li,ri,d,s = F.triangle(mean,left=0,right=len(mean)-1)
+        li,ri,d,s = triangle(mean,left=0,right=len(mean)-1)
         amx = np.argmax(mean)
         p,e = scipy.optimize.curve_fit(self.piecewise_function,rng,mean,[li,li+(amx-li)/2,ri-(ri-amx)/2,ri,0.1,1.0,0.1,-1.0])
         mean_fit = self.piecewise_function(rng,*p)
@@ -2183,7 +2182,7 @@ class Calibration_Keyence(Transformation):
         
     def getWidth(self,i,img,left,right):
         col = img[i,:].flatten()
-        li,ri,d,s = F.triangle(col,left=left,right=right)
+        li,ri,d,s = triangle(col,left=left,right=right)
         
         if F.verify(col,li,ri,left,right):
             return (li,ri)
@@ -2241,7 +2240,7 @@ class Calibration_Keyence(Transformation):
         dst = dst / 10000 # micrometer
         rng = np.arange(dst.shape[1]) * 2798.716 / 1000
         mean = np.mean(dst,axis=0)
-        li,ri,d,s = F.triangle(mean,left=0,right=len(mean)-1)
+        li,ri,d,s = triangle(mean,left=0,right=len(mean)-1)
         amx = np.argmax(mean)
         p,e = scipy.optimize.curve_fit(self.piecewise_function,rng,mean,[li,li+(amx-li)/2,ri-(ri-amx)/2,ri,0.1,1.0,0.1,-1.0])
         mean_fit = self.piecewise_function(rng,*p)
@@ -2422,7 +2421,7 @@ class Homography_Estimate(Transformation):
         dst = dst / 10000 # micrometer
         rng = np.arange(dst.shape[1]) * 2798.716 / 1000
         mean = np.mean(dst,axis=0)
-        li,ri,d,s = F.triangle(mean,left=0,right=len(mean)-1)
+        li,ri,d,s = triangle(mean,left=0,right=len(mean)-1)
         amx = np.argmax(mean)
         p,e = scipy.optimize.curve_fit(self.piecewise_function,rng,mean,[li,li+(amx-li)/2,ri-(ri-amx)/2,ri,0.1,1.0,0.1,-1.0])
         mean_fit = self.piecewise_function(rng,*p)

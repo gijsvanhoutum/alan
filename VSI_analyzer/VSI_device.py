@@ -310,7 +310,7 @@ class XirisAVI(BaseDevice):
 
     def initialize(self):        
         self.path = 0
-        self.fps = 10        
+        self.fps = 10.0        
 
         self.setupReader(self.path)
         self.setupTimer(self.fps)
@@ -337,7 +337,7 @@ class XirisAVI(BaseDevice):
         
     def setupTimer(self,fps):
         self.timer = QTimer()
-        self.timer.setInterval(1000/fps)
+        self.timer.setInterval(int(1000.0/fps))
         self.timer.timeout.connect(self.sendFrame)            
 
     def setParams(self,par_list):
@@ -363,7 +363,7 @@ class XirisAVI(BaseDevice):
             self.reader.set(1,self.pos+1)    
             self.sendFrame()        
         elif name == "FPS_S":
-            self.timer.setInterval(1000/value) 
+            self.timer.setInterval(int(1000/value)) 
 
             
 class XirisDAT(BaseDevice):

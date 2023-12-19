@@ -110,26 +110,3 @@ class Model(QObject):
     # Start the Gui
     def start(self):
         self.gui.show()
-        
-if __name__ == '__main__':
-    a = QApplication(sys.argv)
-
-
-    Sources = [NEW_AVI,InternshipAVI,XirisAVI,KeyenceCSV,MultiCSV,XirisDAT]
-    Algos = [SortBlue,Error,Normal,Triangle,Threshold,SegmentDeposition, \
-                  SegmentLineEdge,ExtractWidth,ExtractHeight,WidthHeight, \
-                  Complete,HW,W_Keyence,CompleteXiris,CompleteXiris2, \
-                  CompleteXiris3,TriangleDirect, SortThreshold, TiltCorrection, \
-                  MeltpoolThreshold,Calibration_Keyence,Intersection_Keyence,HoughLines]
-                                    
-    p = Model(Gui,
-              ViewHandler,View,
-              SettingHandler,CombiSetting,
-              DeviceHandler,Sources,
-              TransformHandler,Algos,
-              Frame
-              )
-                          
-    p.start()
-    a.exec_()
-    

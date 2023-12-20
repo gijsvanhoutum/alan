@@ -1,12 +1,7 @@
-# To access shell arguments given at application startup
+
 import sys
+from PyQt5.QtWidgets import QApplication
 
-# Gui library components
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-
-# Home made modules
 from VSI_analyzer.VSI_gui import Gui
 from VSI_analyzer.VSI_viewhandler import ViewHandler
 from VSI_analyzer.VSI_view import View
@@ -44,7 +39,7 @@ def main():
           )
 
     p.start()
-    a.exec_()    
+    sys.exit(a.exec_())
     
 if __name__ == '__main__':
     main()

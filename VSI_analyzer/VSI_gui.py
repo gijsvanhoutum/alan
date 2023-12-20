@@ -99,10 +99,7 @@ class Gui(QMainWindow):
             action.setStatusTip(text)
 
         return action
-    
 
-
-                
 class VerticalScrollArea(QScrollArea):
     def __init__(self,widget):
         super(self.__class__, self).__init__()   

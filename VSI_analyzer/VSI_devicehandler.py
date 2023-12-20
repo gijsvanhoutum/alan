@@ -1,11 +1,10 @@
-from PyQt5.QtCore import *
+from PyQt5.QtCore import QObject,QThread,pyqtSignal
 
 
 class DeviceHandler(QObject):
 
     DataSignal = pyqtSignal(object)
-    
-        # PRIVATE METHODS
+
     def __init__(self,device_classes,data_class,parent=None):
         super(self.__class__, self).__init__(parent)
     
@@ -16,7 +15,7 @@ class DeviceHandler(QObject):
         self.status = "unset"
 
     def setDevice(self,name):
-        if self.status is not "unset":
+        if self.status != "unset":
             self.quitDevice()
         
         self.device_thread = QThread()
@@ -46,13 +45,13 @@ class DeviceHandler(QObject):
         return self.device_used.getInfo()
         
     def getUsedNamePath(self):
-        if self.status is "unset":
+        if self.status == "unset":
             return None
         else:
             return self.device_used.getNamePath()
             
     def startDevice(self):
-        if self.status is not "run":
+        if self.status != "run":
             self.device_used.start()
             self.status = "run"
                 
@@ -70,13 +69,13 @@ class DeviceHandler(QObject):
         self.device_thread.wait() 
                          
     def getUsedDeviceName(self):
-        if self.status is "unset":
+        if self.status == "unset":
             return None
         else:
             return self.device_used.getDeviceName()
        
     def hasDevice(self):
-        if self.status is "unset":
+        if self.status == "unset":
             return False
         else:
             return True

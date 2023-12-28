@@ -5,14 +5,14 @@ import cv2               # OpenCV library
 from PyQt5.QtCore import *  # PyQt core objects 
 
 # Users defined classes / modules
-from .VSI_metaclass import MetaClass # Metaclass for interfacing
+from VSI_metaclass import MetaClass # Metaclass for interfacing
 
 import time
 import csv
 import pickle
 import struct
 import numpy as np
-import pandas as pd
+# import pandas as pd
 
 """ 
 This class is a Abstract Base Class (Interface) for a device which shall

@@ -2,24 +2,24 @@ from abc import ABCMeta,abstractmethod
 import cv2
 import numpy as np
 import csv
-from scipy import ndimage
+# from scipy import ndimage
 import math
 
-from .VSI_functions import *
+from VSI_functions import *
 
-import scipy.ndimage.measurements as sp
+# import scipy.ndimage.measurements as sp
 
-from skimage.segmentation import watershed
-from skimage.feature import peak_local_max
-from scipy import ndimage
-import scipy
+# from skimage.segmentation import watershed
+# from skimage.feature import peak_local_max
+# from scipy import ndimage
+# import scipy
 
-from sklearn.cluster import DBSCAN
-from sklearn.datasets import make_blobs
+# from sklearn.cluster import DBSCAN
+# from sklearn.datasets import make_blobs
 
-from scipy.optimize import minimize_scalar,curve_fit
+# from scipy.optimize import minimize_scalar,curve_fit
 
-from scipy.stats import norm
+# from scipy.stats import norm
 
 
 class Transformation:

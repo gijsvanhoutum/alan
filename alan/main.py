@@ -1,7 +1,5 @@
-# To access shell arguments given at application startup
 import sys
 
-# Gui library components
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -23,33 +21,67 @@ from VSI_device import *
 from VSI_transform import *  
 
 
-class Model(QObject):    
-    # Initialize program, add all available classes to the handlers and 
-    # connect all signals.
-    def __init__(self,gui,
-                 viewhandler,view,
-                 settinghandler,setting,
-                 devicehandler,devices,
-                 transformhandler,transforms,
-                 data
-                 ):
-                     
-        # Initialize Super Class to be able to connect Signals            
-        super(self.__class__,self).__init__()        
+class ALAN(QObject):    
+    """
+    ALAN: Video Algorithm Analyzer.
+    """
+    def __init__(self):        
+        super(self.__class__,self).__init__()      
+        
         # Handles all what is displayed on the gui in terms of DataViews and
         # SettingViews.
-        self.view_h = viewhandler(view)
+        self.view_h = ViewHandler(View)
 
         # Handles all input widgets shown on the gui paired with the view
-        self.setting_h = settinghandler(setting)
+        self.setting_h = SettingHandler(CombiSetting)
 
-        self.device_h = devicehandler(devices,data)
+        self.devices = [
+            XirisAVI,
+            InternshipAVI,
+            NEW_AVI,
+            KeyenceCSV,
+            MultiCSV,
+            XirisDAT
+        ]
+        
+        self.device_h = DeviceHandler(self.devices,Frame)
+        
+        self.transforms = [
+            SortBlue,
+            Error,
+            Normal,
+            Triangle,
+            Threshold,
+            SegmentDeposition,
+            SegmentLineEdge,
+            ExtractWidth,
+            ExtractHeight,
+            WidthHeight,
+            Complete,
+            HW,
+            W_Keyence,
+            CompleteXiris,
+            CompleteXiris2,
+            CompleteXiris3,
+            TriangleDirect, 
+            SortThreshold, 
+            TiltCorrection,
+            MeltpoolThreshold,
+            Calibration_Keyence,
+            Intersection_Keyence,
+            HoughLines
+        ]
         # Handles transformation algorithms creation
-        self.transform_h = transformhandler(transforms)
+        self.transform_h = TransformHandler(self.transforms)
+        
         # The gui/controller sends signals when a action is activated. 
         # It needs the handlers for initialization.
-        self.gui = gui(self.view_h,self.setting_h,self.device_h,
-                       self.transform_h)
+        self.gui = Gui(
+            self.view_h,
+            self.setting_h,
+            self.device_h,
+            self.transform_h
+        )
 
         # Connect all signals with slots
         self._connectSignals()
@@ -109,3 +141,8 @@ class Model(QObject):
     # Start the Gui
     def start(self):
         self.gui.show()
+    
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    gui = ALAN()
+    sys.exit(app.exec_())

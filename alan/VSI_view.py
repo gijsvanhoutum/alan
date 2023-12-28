@@ -4,10 +4,10 @@ from PyQt5.QtCore import *
 from qwt import *
 
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
-import matplotlib.ticker as mticker
-from matplotlib import cm
+# import matplotlib.pyplot as plt
+# import matplotlib.gridspec as gridspec
+# import matplotlib.ticker as mticker
+# from matplotlib import cm
 
 import random
 

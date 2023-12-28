@@ -28,7 +28,7 @@ sudo apt install git
 ```
 Clone the repository to current working directory
 ```sh
-git clone https://github.com/gijsvanhoutum/trec.git
+git clone https://github.com/gijsvanhoutum/alan.git
 ```
 We advise to install a new python virtual environment first with:
 ```sh
@@ -40,16 +40,17 @@ source venv/bin/activate
 ```
 Install all necessary Python packages with:
 ```sh
-pip install -r /trec/requirements.txt
+pip install -r /alan/requirements.txt
 ```
 ## How to run it
 
 To run execute the following from the current working directory:
 ```sh
-python3 /trec/trec/main.py
+python3 /alan/alan/main.py
 ```
 
 ## TODO
 
 - General cleanup and debugging of the difference devives and algorithms. Current 
 is bloated
+- Comments throughout need to be updated. 

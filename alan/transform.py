@@ -5,7 +5,7 @@ import csv
 # from scipy import ndimage
 import math
 
-from VSI_functions import *
+from functions import *
 
 # import scipy.ndimage.measurements as sp
 

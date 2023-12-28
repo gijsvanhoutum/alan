@@ -1,24 +1,22 @@
 import sys
 
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
+from PyQt5.QtCore import QObject,pyqtSlot
+from PyQt5.QtWidgets import QApplication
 
-# Home made modules
 from gui import Gui
-from VSI_viewhandler import ViewHandler
-from VSI_view import View
-from VSI_settinghandler import SettingHandler
-from VSI_setting import CombiSetting
-#from VSI_recordhandler import RecordHandler
-#from VSI_record import Record
-from VSI_devicehandler import DeviceHandler
+from viewhandler import ViewHandler
+from view import View
+from settinghandler import SettingHandler
+from setting import CombiSetting
+#from recordhandler import RecordHandler
+#from record import Record
+from devicehandler import DeviceHandler
 
-from VSI_transformhandler import TransformHandler
-from VSI_data import Frame
+from transformhandler import TransformHandler
+from data import Frame
 
-from VSI_device import *
-from VSI_transform import *  
+from device import *
+from transform import *  
 
 
 class ALAN(QObject):    
@@ -38,10 +36,10 @@ class ALAN(QObject):
         self.devices = [
             XirisAVI,
             InternshipAVI,
-            NEW_AVI,
-            KeyenceCSV,
-            MultiCSV,
-            XirisDAT
+            # NEW_AVI,
+            # KeyenceCSV,
+            # MultiCSV,
+            # XirisDAT
         ]
         
         self.device_h = DeviceHandler(self.devices,Frame)

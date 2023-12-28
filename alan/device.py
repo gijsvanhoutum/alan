@@ -2,10 +2,10 @@ import os
 import abc
 # Second party libraries
 import cv2               # OpenCV library
-from PyQt5.QtCore import *  # PyQt core objects 
+from PyQt5.QtCore import QObject,QTimer,pyqtSlot,pyqtSignal  # PyQt core objects 
 
 # Users defined classes / modules
-from VSI_metaclass import MetaClass # Metaclass for interfacing
+from metaclass import MetaClass # Metaclass for interfacing
 
 import time
 import csv

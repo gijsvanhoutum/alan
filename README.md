@@ -51,6 +51,6 @@ python3 /alan/alan/main.py
 
 ## TODO
 
-- General cleanup and debugging of the difference devives and algorithms. Current 
-is bloated
+- General cleanup and debugging of the different devices and algorithms. The 
+current implementation is bloated and many algorithms do not completely work.
 - Comments throughout need to be updated. 

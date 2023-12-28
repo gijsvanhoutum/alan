@@ -137,10 +137,6 @@ class ALAN(QObject):
             self.device_h.doCommand(inst_name,par_list)
         elif inst_name in self.transform_h.getInstNames():
             self.transform_h.doCommand(inst_name,par_list)
-        
-    # Start the Gui
-    def start(self):
-        self.gui.show()
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)

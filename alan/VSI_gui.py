@@ -23,8 +23,10 @@ class Gui(QMainWindow):
         
         self.initial()
         
+        self.show()
+        
     def _set_constants(self):
-        self.icon_path = "./icons/"
+        self.icon_path = "../icons/"
 
         self.setting_title = "Setting"
         self.view_title = "View"

@@ -1,6 +1,6 @@
 # ALAN: Algorithm Analyzer
 
-**ALAN** is a GUI application for algorithm visuaization. Being able to 
+**ALAN** is a GUI application for algorithm visualization. Being able to 
 visualize how algorithms behave on recorded videos, while being able to 
 interact and change algorithm settings could be helpful in algorithm design.
 

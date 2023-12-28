@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 
 # Home made modules
-from VSI_gui import Gui
+from gui import Gui
 from VSI_viewhandler import ViewHandler
 from VSI_view import View
 from VSI_settinghandler import SettingHandler

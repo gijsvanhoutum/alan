@@ -6,14 +6,21 @@ import os
 # ICONS at: https://specifications.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html#names
 
 class Gui(QMainWindow):    
-    
+    """
+    The GUI window
+    """
     generator = pyqtSignal(str)
     transform = pyqtSignal(str)
     command = pyqtSignal(str)
     
     def __init__(self,view,setting,device,transform,parent=None):
         super(self.__class__, self).__init__(parent)
-
+        """
+        Constructor
+        """
+        # set the title
+        self.setWindowTitle("ALAN: Algorithm Analyzer")
+        
         self.setting = setting
         self.view = view
 
@@ -23,11 +30,8 @@ class Gui(QMainWindow):
         
         self.initial()
         
-        self.show()
-        
     def _set_constants(self):
         self.icon_path = "../icons/"
-
         self.setting_title = "Setting"
         self.view_title = "View"
         self.source_title = "Select Source"
@@ -41,6 +45,7 @@ class Gui(QMainWindow):
         self.views_dock.hide()
         self.AlgoMenu.menuAction().setVisible(False)
         self.SinkMenu.menuAction().setVisible(False)
+        self.show()
         
     def sizeHint(self):
         return QSize(640,480)

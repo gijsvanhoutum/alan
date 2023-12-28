@@ -192,7 +192,7 @@ class InternshipAVI(BaseDevice):
 
     __NAME__ = "AVI - Internship"
     __ICON__ = "avi"
-    __SRC__  = "./source/AVI_internship/"
+    __SRC__  = "../source/AVI_internship/"
     __HINT__ = "avi"
 
     __VIEW__ = [["Video","c","r",0,0,6,8,{"I":"image"}]]               
@@ -292,7 +292,7 @@ class XirisAVI(BaseDevice):
     __NAME__ = "AVI - Xiris"
     __ICON__ = "avi"
     __TYPE__ = "file"
-    __SRC__  = "./source/AVI_xiris/"
+    __SRC__  = "../source/AVI_xiris/"
     __HINT__ = "avi"
     
     __VIEW__ = [["Data","c","r",0,0,3,4,{"I":"image"}]]
@@ -372,7 +372,7 @@ class XirisDAT(BaseDevice):
     __NAME__ = "DAT - Xiris"
     __ICON__ = "dat"
     __TYPE__ = "file"
-    __SRC__  = "./source/DAT_xiris/dat_4"
+    __SRC__  = "../source/DAT_xiris/dat_4"
     __HINT__ = "dat"
 
     __VIEW__ = [["Xiris DAT Original","c","r",0,0,3,4,
@@ -538,7 +538,7 @@ class KeyenceCSV(BaseDevice):
     __TYPE__ = "file"
     __HINT__ = "csv"
     
-    __SRC__ = "./source/CSV_keyence/"
+    __SRC__ = "../source/CSV_keyence/"
 
     __VIEW__ = [["Row","height","r",0,0,3,4,{"I":"image"}]]
     __SETS__ = [["Control",[["Start","B",0,0,1,1,"media-playback-start"],
@@ -641,7 +641,7 @@ class MultiCSV(BaseDevice):
     __TYPE__ = "file"
     __HINT__ = "csv"
     
-    __SRC__ = "./source/CSV_multi/"
+    __SRC__ = "../source/CSV_multi/"
 
     __VIEW__ = [["Algorithm","c","r",0,0,6,8,
                             {"algo_height":"curve",
